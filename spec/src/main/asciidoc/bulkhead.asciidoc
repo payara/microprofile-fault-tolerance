@@ -1,0 +1,45 @@
+//
+// Copyright (c) 2016-2017 Contributors to the Eclipse Foundation
+//
+// See the NOTICE file(s) distributed with this work for additional
+// information regarding copyright ownership.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// You may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// Contributors:
+// John D. Ament
+
+[[bulkhead]]
+== Bulkhead
+Bulkheads allow you to control the concurrent calls to a component.  Each caller can access the component until the number of threads calling that component reaches the bulkhead value.  Additional requests will queue up until the `waitingThreadQueue` value is filled, at which point subsequent invocations will fail.
+
+Bulkheads come in two forms, synchronous and asynchronous.  Bulkheads are assumed to be synchronous, unless the `@Asynchronous` annotation is used.
+
+The attributes of a Bulkhead are assumed to be on a per method basis, even if `@Bulkhead` is applied at a class level.  Each method has its own Bulkhead, and the concurrent access to one method is not related in any way to the concurrent access of another method.
+
+=== Synchronous Bulkheads
+
+Synchronous Bulkheads are synonymous with counting semaphores.  The number of concurrent operations will increase until the `value` has been reached, additional invocations will be queued.
+
+=== Asynchronous Bulkheads
+
+Asynchronous Bulkheads use a fixed size thread pool to control concurrent access.  The requests beyonds that size will be queued on that thread pool.  Methods on an
+
+=== Limitations
+
+Due to how Bulkheads are designed, you are limited in how you can use a Bulkhead component.  It must be one of the following scopes:
+
+* `ApplicationScoped`
+* `Singleton`
+* `SessionScoped`
+
+These are the only scopes that support both proxying and concurrent access to the same underlying instance.  Usage on beans of other scopes will result in a `DeploymentException`

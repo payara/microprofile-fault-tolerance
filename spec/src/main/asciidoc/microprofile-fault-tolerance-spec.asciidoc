@@ -51,3 +51,5 @@ include::retry.asciidoc[]
 include::circuitbreaker.asciidoc[]
 
 include::fallback.asciidoc[]
+
+include::bulkhead.asciidoc[]
