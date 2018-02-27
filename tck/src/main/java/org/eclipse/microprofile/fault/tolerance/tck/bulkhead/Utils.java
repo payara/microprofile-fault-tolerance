@@ -94,7 +94,7 @@ public class Utils {
         try {
             for (int i = 0; i < iterations; i++) {
                 Utils.log("Starting test " + i);
-                results[i] = test.test(new Checker(1 * 1000, td));
+                results[i] = test.test(new Checker(1 * 1250, td));
             }
         }
         catch (InterruptedException e1) {
