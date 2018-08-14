@@ -26,6 +26,7 @@ import java.util.concurrent.Future;
 import org.eclipse.microprofile.fault.tolerance.tck.bulkhead.clientserver.BulkheadTestBackend;
 import org.eclipse.microprofile.fault.tolerance.tck.bulkhead.clientserver.Checker;
 import org.eclipse.microprofile.fault.tolerance.tck.bulkhead.clientserver.TestData;
+import org.eclipse.microprofile.faulttolerance.exceptions.BulkheadException;
 import org.testng.Assert;
 
 public class Utils {
@@ -65,6 +66,9 @@ public class Utils {
         }
         catch (Throwable e) {
             log(e.toString());
+            if (e instanceof BulkheadException) {
+                throw (BulkheadException) e;
+            }
         }
     }
 
@@ -90,7 +94,7 @@ public class Utils {
         try {
             for (int i = 0; i < iterations; i++) {
                 Utils.log("Starting test " + i);
-                results[i] = test.test(new Checker(1 * 1000, td));
+                results[i] = test.test(new Checker(1 * 1250, td));
             }
         }
         catch (InterruptedException e1) {
