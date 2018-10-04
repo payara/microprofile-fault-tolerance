@@ -65,7 +65,7 @@ public class RetryTimeoutTest extends Arquillian {
     @Test
     public void testRetryTimeout() {
         try {
-            String result = clientForRetryTimeout.serviceA(1000);
+            String result = clientForRetryTimeout.serviceA(20000);
         } 
         catch (TimeoutException ex) {
             // Expected
