@@ -61,7 +61,7 @@ public class TimeoutGlobalConfigTest extends Arquillian {
     @Test
     public void testTimeout() {
         try {
-            clientForTimeout.serviceA(500);
+            clientForTimeout.serviceA(800);
             Assert.fail("serviceA should throw a TimeoutException in testTimeout");
         }
         catch (TimeoutException ex) {

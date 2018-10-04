@@ -107,7 +107,7 @@ public class DisableAnnotationClient {
     @Timeout(500)
     public void failWithTimeout() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(40000);
             throw new TestException();
         }
         catch (InterruptedException e) {
